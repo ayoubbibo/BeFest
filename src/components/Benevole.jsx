@@ -1,4 +1,4 @@
-import '../styles/Home.css';
+import '../styles/Benevole.css';
 import Header from './Header';
 
 //import Axios from "axios";
@@ -8,7 +8,7 @@ import Header from './Header';
  * this is the main component where the request for fetching data from the api is done
  * it containes the posts list
  */
-function Home(){
+function Benevole(){
 /*const [data, setData] = useState([]);
 useEffect(() => {
     Axios.get('http://localhost:3000/api/posts')
@@ -22,9 +22,12 @@ useEffect(() => {
 return(
         <div className="app">
             <Header></Header>
+            <div className="container">
+                bibi
+            </div>
         </div>
     )
 }
 
-export default Home;
+export default Benevole;
   
