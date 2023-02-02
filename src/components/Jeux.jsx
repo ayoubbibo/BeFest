@@ -22,9 +22,6 @@ useEffect(() => {
 return(
         <div className="app">
             <Header></Header>
-            <div className="container">
-                bibi
-            </div>
         </div>
     )
 }

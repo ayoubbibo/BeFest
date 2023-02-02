@@ -1,0 +1,39 @@
+.ben-content
+{    
+    height: 100%;
+    margin: 10px;
+    margin-top: 20px;
+}
+
+.ajoute_ben_container
+{
+    background-color: white;
+    margin: 10px;
+    margin-top: 20px;
+    height: 390px;
+    width: 270px;
+    border-radius: 0.7em;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+
+.avatar
+{
+    width: 150px;
+    height: 150px;
+}
+
+.form_ajout
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.form_ajout > * , .form_ajout > * > *
+{
+    font-size: 15px;
+}
