@@ -3,6 +3,8 @@
     height: 100%;
     margin: 10px;
     margin-top: 20px;
+    display: flex;
+    flex-direction: row;
 }
 
 .ajoute_ben_container
@@ -36,4 +38,15 @@
 .form_ajout > * , .form_ajout > * > *
 {
     font-size: 15px;
+}
+
+.ben_cards
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    list-style: none;
 }
