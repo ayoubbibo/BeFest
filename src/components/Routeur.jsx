@@ -1,4 +1,6 @@
-import Home from './Home';
+import Zones from './Zones';
+import Benevole from './Benevole';
+import Jeux from './Jeux';
 import {Route, Routes, useLocation} from 'react-router-dom';
 import NoExistingPage from './NoExistingPage';
 
@@ -14,8 +16,10 @@ function Routeur()
     const location = useLocation();
     return(
         <Routes location={location} key={location.pathname}> 
-            <Route path="/Home" exact element={<Home />}/>
-            <Route path="/" exact element={<Home />}/>
+            <Route path="/Zones" exact element={<Zones />}/>
+            <Route path="/Benevole" element={<Benevole />}/>
+            <Route path="/Jeux" element={<Jeux />}/>
+            <Route path="/" exact element={<Zones />}/>
             <Route path="*" element={<NoExistingPage />}/>
         </Routes>
     );
