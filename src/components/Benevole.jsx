@@ -2,6 +2,9 @@ import '../styles/Benevole.css';
 import Header from './Header';
 import BenevoleCard from './BenevoleCard';
 import { Form, Button } from 'react-bootstrap';
+import React, { useState, useRef } from 'react';
+import {Card} from 'react-bootstrap';
+
 //import Axios from "axios";
 //import { useEffect, useState } from 'react';
 
@@ -46,11 +49,13 @@ function randomAvatar() {
     return avatarUrl;
 }
 
+
 // create the url for the avatar
 const avatarUrl = randomAvatar();
 
-// Create a list that will contains a list of volunteers
-const list = [
+// Create a list that will contains a list of volunteers 
+const [list, setList] = useState(
+[
     {
         id: 1,
         nom: "Ben",
@@ -64,33 +69,45 @@ const list = [
         email: "ben.moussa@gmail.com"
     },
     {
-        id: 2,
+        id: 3,
         nom: "Ben",
         prenom: "Moussa",
         email: "ben.moussa@gmail.com"
     },
     {
-        id: 2,
-        nom: "Ben",
-        prenom: "Moussa",
-        email: "ben.moussa@gmail.com"
-    }
-    ,
-    {
-        id: 2,
-        nom: "Ben",
-        prenom: "Moussa",
-        email: "ben.moussa@gmail.com"
-    }
-    ,
-    {
-        id: 2,
+        id: 4,
         nom: "Ben",
         prenom: "Moussa",
         email: "ben.moussa@gmail.com"
     }
 ]
+)
 
+
+const dragItem = useRef();
+const dragOverItem = useRef();
+
+const dragStart = (e, position) => {
+  dragItem.current = position;
+  console.log(e.target.innerHTML);
+};
+
+const dragEnter = (e, position) => {
+  dragOverItem.current = position;
+  console.log(e.target.innerHTML);
+};
+
+const drop = (e) => {
+    const copyListItems = [...list];
+    const dragItemContent = copyListItems[dragItem.current];
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    // drop the li item in the cont div
+    e.target.appendChild(e.target.childNodes[0]);
+    setList(copyListItems);
+  };
 
 return(
         <div className="app">
@@ -120,12 +137,31 @@ return(
                 <div className="liste_ben_container">
                     <ul className="ben_cards">
                         {
-                            list.map((item) => (
-                                <BenevoleCard key={item.id} nom={item.nom} prenom={item.prenom} avatar={avatarUrl}> 
-                                </BenevoleCard>
+                            list.map((item, index) => (
+                                    <li key={index}  
+                                        onDragStart={(e) => dragStart(e, index)}
+                                        onDragEnter={(e) => dragEnter(e, index)} 
+                                        onDragEnd={drop}
+                                        draggable>
+                                    <Card className="ben-li">
+                                        <Card.Body className="ben-li-body">
+                                            <Card.Img variant="top" src={avatarUrl} className="ben-cover__item" alt="Logo"/>
+                                            <div>
+                                                <Card.Title>{item.nom}<br/>
+                                                </Card.Title>
+                                                <Card.Text>
+                                                    {item.prenom}	
+                                                </Card.Text>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                </li>                    
                             ))
                         }   
                     </ul>
+                </div>
+                <div className="cont">
+                
                 </div>
             </div>
         </div>

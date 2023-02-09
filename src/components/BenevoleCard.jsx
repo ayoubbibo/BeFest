@@ -1,7 +1,8 @@
 import {Card} from 'react-bootstrap';
-import '../styles/BenevoleCard.css'
+import '../styles/BenevoleCard.css';
 
-function BenevoleCard({id,nom,prenom,avatar })
+
+function BenevoleCard({id,nom,prenom,avatar})
 {
     return(
         <li key={id}>
@@ -17,7 +18,6 @@ function BenevoleCard({id,nom,prenom,avatar })
                     </div>
                 </Card.Body>
             </Card>
-            
         </li>
     )
 }
