@@ -19,7 +19,7 @@ return (
             please do not use the url to navigate between routes.
             </p>
         </Alert>
-        <Button variant="warning" onClick={()=> {navigate("/Home")}}>Go back to home</Button>
+        <Button variant="warning" onClick={()=> {navigate("/Home")}}>Go back to home</Button>    
     </div>
 );
 
