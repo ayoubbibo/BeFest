@@ -13,6 +13,7 @@ import { useEffect } from 'react';
  * it containes the posts list
  */
 function Jeux(){
+const [options, setOptions] = useState([]);
 const [data, setData] = useState([]);
 useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/jeux`)
@@ -23,15 +24,23 @@ useEffect(() => {
         }
     )
     .catch(err => console.log(err));
+
+    axios.get(`${process.env.REACT_APP_API_URL}/type-jeux`)
+    .then(res => {
+        console.log("We got the data that we need ",res.data)
+        setOptions(res.data);
+        console.log(options);
+    })
+    .catch(err => console.log(err));
 }, [])
 return(
         <div className="app">
             <Header></Header>
             <div className="ben-content">
                 <div>
-                    <Form>
+                    <Form className="form_ajout">
                         <Form.Group className="mb-3" >
-                            <img src="../assets/jeux_logo.png" alt="" />
+                            <img src={require("./../assets/jeux_logo.png")} alt="Image de jeu" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" >
@@ -42,7 +51,12 @@ return(
                         <Form.Group className="mb-3" >
                             <Form.Label>Type de jeu</Form.Label>
                             <Form.Select>
-
+                                {
+                                    options.map((option) =>(
+                                        <option key={option._id}>{option.name}</option>
+                                        )   
+                                    )
+                                }
                             </Form.Select>
                         </Form.Group>
                     </Form>
@@ -51,9 +65,10 @@ return(
                 <div>
                     <ul>
                         {
-                            data.map((item, index) => {
-                                <li key={item._id}>77</li>
-                            })
+                            data.map((jeu) =>(
+                                <li key={jeu._id}>{jeu.name}</li>
+                                )
+                            )
                         }
                                 
                     </ul>
