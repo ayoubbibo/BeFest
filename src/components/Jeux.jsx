@@ -2,45 +2,44 @@ import '../styles/Jeux.css';
 import Header from './Header';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import { useEffect } from 'react';
 
-//import Axios from "axios";
-//import { useEffect, useState } from 'react';
 
-/**
- * this is the main component where the request for fetching data from the api is done
- * it containes the posts list
- */
 function Jeux(){
-const [options, setOptions] = useState([]);
-const [data, setData] = useState([]);
-useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/jeux`)
-    .then(res => { 
+
+    const [options, setOptions] = useState([]);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        getJeux();
+    }, [])
+
+
+    const getJeux = () => {
+        Axios.get(`${process.env.REACT_APP_API_URL}/jeux`)
+        .then(res => {
             console.log("We got the data that we need ",res.data)
             setData(res.data);
-            console.log(data);
-        }
-    )
-    .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+        
+        Axios.get(`${process.env.REACT_APP_API_URL}/type-jeux`)
+        .then(res => {
+            console.log("We got the data that we need ",res.data)
+            setOptions(res.data);
+        })
+        .catch(err => console.log(err));
+    }
 
-    axios.get(`${process.env.REACT_APP_API_URL}/type-jeux`)
-    .then(res => {
-        console.log("We got the data that we need ",res.data)
-        setOptions(res.data);
-        console.log(options);
-    })
-    .catch(err => console.log(err));
-}, [])
-return(
+
+    return(
         <div className="app">
             <Header></Header>
             <div className="ben-content">
                 <div>
                     <Form className="form_ajout">
                         <Form.Group className="mb-3" >
-                            <img src={require("./../assets/jeux_logo.png")} alt="Image de jeu" />
+                            <img src={require("./../assets/jeux_logo.png")} alt={"jeux logo"}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" >
