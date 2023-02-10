@@ -6,6 +6,11 @@ import Axios from "axios";
 import { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// Import Icons to Update and Delete 
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+
 
 function Zones(){
 
@@ -33,7 +38,7 @@ function addZone(event){
         name: newZoneName
     })
     .then(res => {
-        console.log(res.data);
+        console.log(res.data);    document.body.classList.add("fixed");
         toast.success('The Zone Is Created Succesfully!', {
                 position: "top-center",
                 autoClose: 3000,
@@ -61,10 +66,15 @@ function showZoneDetails(zone){
 
 return(
         <div className="app">
-            <Header/>
+            
             {
-                zoneClicked ? <ZoneDetails zone={zoneToDetail} /> : null
+                zoneClicked ? 
+                    <div className="zone-details">
+                        <ZoneDetails zone={zoneToDetail} setZoneClicked={setZoneClicked} /> 
+                    </div>
+                : null
             }
+            <Header/>
             <div className="zones-container">
                     
                 <div className="ajoute_zone_container">
@@ -78,7 +88,7 @@ return(
                                 onChange={(event) => { setNewZoneName(event.target.value)}}
                             />
                             <ToastContainer />
-                        </Form.Group>
+                        </Form.Group>of
                         <Button variant="outline-success" type="submit" onClick={addZone}>
                             Ajouter La Zone
                         </Button>
@@ -90,8 +100,11 @@ return(
                         {
                             data.map((zone) => (
                                 <li key={zone._id} className="zone-li-info">
-                                    <button className="zone-name"  onClick={() => showZoneDetails(zone)}>
-                                        {zone.name}
+                                    <button className="zone-name"  onClick={() => 
+                                        showZoneDetails(zone)}>
+                                        <div>{zone.name}</div>
+                                        <FontAwesomeIcon icon={faPen} className="edit-icon" onClick={() => {zone.name = "bibo"}}/>
+                                        <FontAwesomeIcon icon={faTrash} className="delete-icon" />
                                     </button>
                                     <div className="zone-jeux">
                                         <ul className="zone-jeux-list">
