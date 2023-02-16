@@ -4,13 +4,9 @@ import Header from './Header';
 import ZoneDetails from './ZoneDetails';
 import Axios from "axios";
 import { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button} from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// Import Icons to Update and Delete 
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import ZoneNameOp from './ZoneNameOp';
 
 function Zones(){
 
@@ -21,7 +17,7 @@ useEffect(() => {
 }, [])
 
 const getZones = () => {
-    Axios.get(`${process.env.REACT_APP_API_URL}/zones`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/zones/`)
     .then(res => {
         console.log("We got the data that we need ",res.data)
         setData(res.data);
@@ -59,24 +55,20 @@ function addZone(event){
 const [zoneClicked, setZoneClicked] = useState(false);
 const [zoneToDetail, setZoneToDetail] = useState({});
 
-function showZoneDetails(zone){
-    setZoneClicked(true);
-    setZoneToDetail(zone);
-}
 
 return(
         <div className="app">
-            
             {
                 zoneClicked ? 
                     <div className="zone-details">
-                        <ZoneDetails zone={zoneToDetail} setZoneClicked={setZoneClicked} /> 
+                        <ZoneDetails zone={zoneToDetail} setZoneClicked={setZoneClicked} zoneClicked={zoneClicked}/> 
                     </div>
                 : null
             }
             <Header/>
             <div className="zones-container">
                     
+                
                 <div className="ajoute_zone_container">
                     <Form className="form_ajout">
                         <Form.Group className="mb-3">
@@ -88,7 +80,7 @@ return(
                                 onChange={(event) => { setNewZoneName(event.target.value)}}
                             />
                             <ToastContainer />
-                        </Form.Group>of
+                        </Form.Group>
                         <Button variant="outline-success" type="submit" onClick={addZone}>
                             Ajouter La Zone
                         </Button>
@@ -100,12 +92,7 @@ return(
                         {
                             data.map((zone) => (
                                 <li key={zone._id} className="zone-li-info">
-                                    <button className="zone-name"  onClick={() => 
-                                        showZoneDetails(zone)}>
-                                        <div>{zone.name}</div>
-                                        <FontAwesomeIcon icon={faPen} className="edit-icon" onClick={() => {zone.name = "bibo"}}/>
-                                        <FontAwesomeIcon icon={faTrash} className="delete-icon" />
-                                    </button>
+                                    <ZoneNameOp zone={zone} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked} />
                                     <div className="zone-jeux">
                                         <ul className="zone-jeux-list">
                                             {
