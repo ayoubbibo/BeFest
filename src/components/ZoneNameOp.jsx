@@ -6,10 +6,11 @@ import './../styles/ZoneNameOp.css';
 import Axios from 'axios';
 import {toast } from 'react-toastify';
 
-const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, setscrollPosition}) => {
+const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked}) => {
   const [zoneName, setZoneName] = useState(
     zone.name
   );
+
   const inputRef = React.useRef(null);
 
   useEffect(() => {
@@ -40,10 +41,9 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, setscrollPosition})
 
   function showZoneDetails(){
     setZoneClicked(false);
-    setscrollPosition(window.scrollY); 
+    window.location.reload();
+
   }
-
-
 
 
 

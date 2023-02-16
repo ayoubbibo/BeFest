@@ -14,14 +14,6 @@ const [zoneClicked, setZoneClicked] = useState(false);
 const [zoneToDetail, setZoneToDetail] = useState({});
 const [newZoneName, setNewZoneName] = useState('');
 
-
-const [scrollPosition, setscrollPosition] = useState(0);
-
-useEffect(() => {
-    window.scrollTo(0, scrollPosition);
-}, [scrollPosition]);
-
-
 useEffect(() => {
     getZones();
 }, [])
@@ -76,7 +68,7 @@ return(
             {
                 zoneClicked ? 
                     <div className="zone-details">
-                        <ZoneDetails zone={zoneToDetail} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked} setscrollPosition={setscrollPosition}/> 
+                        <ZoneDetails zone={zoneToDetail} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked}/> 
                     </div>
                 : null
             }
