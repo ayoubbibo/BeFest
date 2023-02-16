@@ -1,11 +1,10 @@
 import './../styles/ZoneDetails.css';
+import ZoneNameOp from './ZoneNameOp';
 
-function ZoneDetails({zone, setZoneClicked}){
+function ZoneDetails({zone, setZoneClicked, zoneClicked}){
     return(
         <div className="zone-li-details-info">
-            <button className="zone-name"  onClick={() => setZoneClicked(false)}>
-                {zone.name}
-            </button>
+            <ZoneNameOp zone={zone} setZoneClicked={setZoneClicked} zoneClicked={zoneClicked}/>
             <div className="zone-jeux">
                 <ul className="zone-jeux-list">
                     {
