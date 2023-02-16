@@ -6,11 +6,21 @@ import Axios from "axios";
 import { useEffect, useState } from 'react';
 import { Form, Button} from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
-import ZoneNameOp from './ZoneNameOp';
 
 function Zones(){
 
 const [data, setData] = useState([]);
+const [zoneClicked, setZoneClicked] = useState(false);
+const [zoneToDetail, setZoneToDetail] = useState({});
+const [newZoneName, setNewZoneName] = useState('');
+
+
+const [scrollPosition, setscrollPosition] = useState(0);
+
+useEffect(() => {
+    window.scrollTo(0, scrollPosition);
+}, [scrollPosition]);
+
 
 useEffect(() => {
     getZones();
@@ -26,7 +36,15 @@ const getZones = () => {
 }
 
 
-const [newZoneName, setNewZoneName] = useState('');
+function showZoneDetails(zone){
+    if(zoneClicked){
+      setZoneClicked(false);
+    }else{
+      setZoneClicked(true);
+      setZoneToDetail(zone);
+    }
+}
+
 
 function addZone(event){
     event.preventDefault();
@@ -52,23 +70,18 @@ function addZone(event){
 }
 
 
-const [zoneClicked, setZoneClicked] = useState(false);
-const [zoneToDetail, setZoneToDetail] = useState({});
-
 
 return(
         <div className="app">
             {
                 zoneClicked ? 
                     <div className="zone-details">
-                        <ZoneDetails zone={zoneToDetail} setZoneClicked={setZoneClicked} zoneClicked={zoneClicked}/> 
+                        <ZoneDetails zone={zoneToDetail} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked} setscrollPosition={setscrollPosition}/> 
                     </div>
                 : null
             }
             <Header/>
             <div className="zones-container">
-                    
-                
                 <div className="ajoute_zone_container">
                     <Form className="form_ajout">
                         <Form.Group className="mb-3">
@@ -92,7 +105,9 @@ return(
                         {
                             data.map((zone) => (
                                 <li key={zone._id} className="zone-li-info">
-                                    <ZoneNameOp zone={zone} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked} />
+                                    <div className="zone-name-op" onClick={() => showZoneDetails(zone)}>
+                                        {zone.name}
+                                    </div>    
                                     <div className="zone-jeux">
                                         <ul className="zone-jeux-list">
                                             {

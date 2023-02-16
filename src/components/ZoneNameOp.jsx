@@ -6,35 +6,19 @@ import './../styles/ZoneNameOp.css';
 import Axios from 'axios';
 import {toast } from 'react-toastify';
 
-const ZoneNameOp = ({ zone, setZoneClicked, setZoneToDetail, zoneClicked}) => {
-  const [isEditable, setIsEditable] = useState(false);
-  const [zoneName, setZoneName] = useState(zone.name);
-
-
+const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, setscrollPosition}) => {
+  const [zoneName, setZoneName] = useState(
+    zone.name
+  );
   const inputRef = React.useRef(null);
-
-
-  const handleEdit = () => {    
-    setIsEditable(true);
-    inputRef.current.focus();
-  };
-
-  const handlEditChange = (e) => {
-    if (e.target.value !== zoneName) {
-      setZoneName(e.target.value);
-    }
-  };
 
   useEffect(() => {
     inputRef.current.onblur = () => {
-      setIsEditable(false);
-      console.log(" bibo  " + zoneName);
-      zone.name = zoneName;
-      setZoneToDetail(zone);
-      console.log(zone);
+      const reqObj = { ...zone, name: zoneName };
+      setZoneToDetail(reqObj);
       // send a request to the server to update the zone name
       Axios.put(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`, 
-        zone
+        reqObj
       )
       .then(res => {
         console.log(res.data);
@@ -47,48 +31,38 @@ const ZoneNameOp = ({ zone, setZoneClicked, setZoneToDetail, zoneClicked}) => {
           draggable: true,
           progress: undefined,
         });
-
-      }
-      )
-      .catch(err => console.log(err));
+      }  
+    )
+    .catch(err => console.log(err));
     }
-  }, [zoneName]);
+  }, [zone, zoneName,setZoneToDetail]);
 
 
-  const handleDelete = () => {
-    zone.name = zoneName;
-    setIsEditable(false);
-  };
-  
-  function showZoneDetails(zone){
-    if(zoneClicked){
-      setZoneClicked(false);
-     }else{
-      setZoneClicked(true);
-      setZoneToDetail(zone);
-    }
+  function showZoneDetails(){
+    setZoneClicked(false);
+    setscrollPosition(window.scrollY); 
   }
+
+
+
+
 
   return (
     <InputGroup className="zone-name">
       <Form.Control
         placeholder={zoneName}
         value={zoneName}
-        onChange={(e) => handlEditChange(e)} 
-        onClick={() => 
-          !isEditable ? showZoneDetails(zone) : null
-        }
-        readOnly={!isEditable}
-        className={isEditable ? 'editable' : 'not-editable'}
+        onChange={(e) => setZoneName(e.target.value)}
         ref={inputRef}
       />
-      <Button variant="outline-warning" onClick={handleEdit}>
+      <Button variant="outline-warning">
         <FontAwesomeIcon icon={faPen} />
       </Button>
-      <Button variant="outline-danger" onClick={handleDelete}>
+      <Button variant="outline-danger" onClick={() => showZoneDetails()}>
         <FontAwesomeIcon icon={faTrashAlt}/>
       </Button>
   </InputGroup>
+
   );
 };
 

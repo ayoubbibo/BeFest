@@ -1,10 +1,10 @@
 import './../styles/ZoneDetails.css';
 import ZoneNameOp from './ZoneNameOp';
 
-function ZoneDetails({zone, setZoneClicked, zoneClicked}){
+function ZoneDetails({zone, setZoneToDetail, setZoneClicked, setscrollPosition}){
     return(
         <div className="zone-li-details-info">
-            <ZoneNameOp zone={zone} setZoneClicked={setZoneClicked} zoneClicked={zoneClicked}/>
+            <ZoneNameOp zone={zone} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked} setscrollPosition={setscrollPosition}/>
             <div className="zone-jeux">
                 <ul className="zone-jeux-list">
                     {
