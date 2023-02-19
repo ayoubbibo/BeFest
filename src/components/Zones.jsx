@@ -12,6 +12,7 @@ function Zones(){
 const [data, setData] = useState([]);
 const [zoneClicked, setZoneClicked] = useState(false);
 const [zoneToDetail, setZoneToDetail] = useState({});
+const [zoneDetailsIndex, setZoneDetailsIndex] = useState(0);
 const [newZoneName, setNewZoneName] = useState('');
 
 useEffect(() => {
@@ -28,12 +29,13 @@ const getZones = () => {
 }
 
 
-function showZoneDetails(zone){
+function showZoneDetails(zone,index){
     if(zoneClicked){
       setZoneClicked(false);
     }else{
       setZoneClicked(true);
       setZoneToDetail(zone);
+      setZoneDetailsIndex(index);
     }
 }
 
@@ -68,7 +70,7 @@ return(
             {
                 zoneClicked ? 
                     <div className="zone-details">
-                        <ZoneDetails zone={zoneToDetail} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked}/> 
+                        <ZoneDetails zone={zoneToDetail} setZoneToDetail={setZoneToDetail} setZoneClicked={setZoneClicked} index={zoneDetailsIndex} setData={setData} data={data}/> 
                     </div>
                 : null
             }
@@ -95,9 +97,10 @@ return(
                 <div className="zones-content">    
                     <ul className='zones-list'>
                         {
-                            data.map((zone) => (
+                            data.map((zone, index) => 
+                            (
                                 <li key={zone._id} className="zone-li-info">
-                                    <div className="zone-name-op" onClick={() => showZoneDetails(zone)}>
+                                    <div className="zone-name-op" onClick={() => showZoneDetails(zone,index)}>
                                         {zone.name}
                                     </div>    
                                     <div className="zone-jeux">

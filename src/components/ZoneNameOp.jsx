@@ -6,7 +6,7 @@ import './../styles/ZoneNameOp.css';
 import Axios from 'axios';
 import {toast } from 'react-toastify';
 
-const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked}) => {
+const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, data}) => {
   const [zoneName, setZoneName] = useState(
     zone.name
   );
@@ -17,6 +17,7 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked}) => {
     inputRef.current.onblur = () => {
       const reqObj = { ...zone, name: zoneName };
       setZoneToDetail(reqObj);
+      setData(data.map((zone, i) => (i === index ? reqObj : zone)));
       // send a request to the server to update the zone name
       Axios.put(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`, 
         reqObj
@@ -36,13 +37,11 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked}) => {
     )
     .catch(err => console.log(err));
     }
-  }, [zone, zoneName,setZoneToDetail]);
+  }, [zone, zoneName,setZoneToDetail,data,index,setData]);
 
 
   function showZoneDetails(){
     setZoneClicked(false);
-    window.location.reload();
-
   }
 
 
