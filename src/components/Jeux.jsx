@@ -44,6 +44,7 @@ function Jeux(){
                     <div className="jeu-details">
                         <JeuDetails 
                             jeu={jeuToDetail}
+                            setJeuToDetail={setJeuToDetail}
                             setJeuClicked={setJeuClicked} 
                             index={jeuDetailsIndex}
                             options={JeuTypeOptions}

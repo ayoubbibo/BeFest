@@ -18,7 +18,6 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
     const [operation, setOperation] = useState('');
     const [contentChanged, setcontentChanged] = useState(false);
 
-  
       
     useEffect(() => {
         function handleClickOutside(event) {
