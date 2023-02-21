@@ -47,7 +47,7 @@ function addZone(event){
     })
     .then(res => {
         console.log(res.data);    document.body.classList.add("fixed");
-        toast.success('The Zone Is Created Succesfully!', {
+        toast.success('La Zone a bien été créée !', {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
