@@ -3,27 +3,21 @@ import { InputGroup, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import './../styles/ZoneNameOp.css';
-import Axios from 'axios';
-import {toast } from 'react-toastify';
 import ValidateUpdate from './ValidateUpdate';
 
 const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, data}) => {
-  const [zoneName, setZoneName] = useState(
-    zone.name
-  );
-
-  const [updateValidated, setUpdateValidated] = useState(
-    false
-  );
-
-  const [contentChanged, setcontentChanged] = useState(
-    false
-  );
-
+  const [zoneName, setZoneName] = useState(zone.name);
+  const [updateValidated, setUpdateValidated] = useState(false);
+  const [contentChanged, setcontentChanged] = useState(false);
+  const [operation, setOperation] = useState('');
   const inputRef = React.useRef(null);
 
+
+
   function tryUpdate() {
-    if (contentChanged) {
+    if (contentChanged) 
+    {
+      setOperation('update');
       setUpdateValidated(true);
     }
     else {
@@ -32,22 +26,8 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
   }
 
   function tryDelete() {
-    setZoneClicked(false);
-    Axios.delete(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`)
-    .then(res => {
-      console.log(res.data);
-      toast.success('The Zone Is Deleted Succesfully!', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setData(data.filter((zone, i) => i !== index));
-    })
-    .catch(err => console.log(err));
+    setOperation('delete');
+    setUpdateValidated(true);
   }
   
 
@@ -56,7 +36,7 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
       {
         updateValidated ? 
             <div className="zone-update-Validator">
-                <ValidateUpdate type="zones" operation="update" 
+                <ValidateUpdate type="zones" operation={operation}
                     zone={zone} 
                     data={data} 
                     setData={setData} 
@@ -64,7 +44,9 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
                     index={index}
                     zoneName={zoneName}
                     setUpdateValidated={setUpdateValidated}
-                    />
+                    setZoneName={setZoneName}
+                    setZoneClicked={setZoneClicked}
+                  />
             </div>
         : null
       }

@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 
 function Jeux(){
-
     const [options, setOptions] = useState([]);
     const [data, setData] = useState([]);
     useEffect(() => {
