@@ -1,0 +1,26 @@
+.jeu-content
+{
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.jeu-list-container
+{
+    height: 100%;
+    width: 100%;
+}
+.jeu-list
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-wrap: wrap;
+    list-style: none;
+}
