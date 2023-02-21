@@ -40,28 +40,52 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
   }, [zone, zoneName,setZoneToDetail,data,index,setData]);
 
 
-  function showZoneDetails(){
+  function tryUpdate() {
     setZoneClicked(false);
+    inputRef.current.focus();
   }
 
-
+  function tryDelete() {
+    setZoneClicked(false);
+    Axios.delete(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`)
+    .then(res => {
+      console.log(res.data);
+      toast.success('The Zone Is Deleted Succesfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setData(data.filter((zone, i) => i !== index));
+    })
+    .catch(err => console.log(err));
+  }
+  
 
   return (
-    <InputGroup className="zone-name">
-      <Form.Control
-        placeholder={zoneName}
-        value={zoneName}
-        onChange={(e) => setZoneName(e.target.value)}
-        ref={inputRef}
-      />
-      <Button variant="outline-warning">
-        <FontAwesomeIcon icon={faPen} />
-      </Button>
-      <Button variant="outline-danger" onClick={() => showZoneDetails()}>
-        <FontAwesomeIcon icon={faTrashAlt}/>
-      </Button>
-  </InputGroup>
-
+    <div className="zone-name-op">
+      <InputGroup>
+        <Form.Control
+          placeholder={zoneName}
+          value={zoneName}
+          onChange={(e) => setZoneName(e.target.value)}
+          ref={inputRef}
+          className="zone-name-input"
+        />
+      </InputGroup>
+      <div className="updates">
+        <Button variant="outline-warning" className='update-btn' onClick={() => tryUpdate()}>
+          <FontAwesomeIcon icon={faPen}/>
+        </Button>
+        <Button variant="outline-danger" onClick={() => tryDelete()}
+        className="delete-btn">
+          <FontAwesomeIcon icon={faTrashAlt}/>
+        </Button>
+      </div>
+  </div>
   );
 };
 

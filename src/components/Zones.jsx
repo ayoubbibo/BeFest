@@ -100,9 +100,10 @@ return(
                             data.map((zone, index) => 
                             (
                                 <li key={zone._id} className="zone-li-info">
-                                    <div className="zone-name-op" onClick={() => showZoneDetails(zone,index)}>
-                                        {zone.name}
-                                    </div>    
+                                    <button className="zone-name" onClick={() => showZoneDetails(zone,index)}>
+                                        <span>{zone.name}</span>
+                                    </button>
+
                                     <div className="zone-jeux">
                                         <ul className="zone-jeux-list">
                                             {
