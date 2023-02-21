@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
@@ -22,37 +22,9 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
 
   const inputRef = React.useRef(null);
 
-  useEffect(() => {
-    inputRef.current.onblur = () => {
-    }
-  }, [zone, zoneName,setZoneToDetail,data,index,setData]);
-
-
   function tryUpdate() {
     if (contentChanged) {
       setUpdateValidated(true);
-      const reqObj = { ...zone, name: zoneName };
-      setZoneToDetail(reqObj);
-      setData(data.map((zone, i) => (i === index ? reqObj : zone)));
-      // send a request to the server to update the zone name
-      Axios.put(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`, 
-        reqObj
-      )
-      .then(res => 
-        {
-          console.log(res.data);
-          toast.success('The Zone Is Updated Succesfully!', {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }  
-      )
-      .catch(err => console.log(err));
     }
     else {
       inputRef.current.focus();
@@ -83,8 +55,16 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
     <div className="zone-name-op">
       {
         updateValidated ? 
-            <div className="zone-details">
-                <ValidateUpdate /> 
+            <div className="zone-update-Validator">
+                <ValidateUpdate type="zones" operation="update" 
+                    zone={zone} 
+                    data={data} 
+                    setData={setData} 
+                    setZoneToDetail={setZoneToDetail} 
+                    index={index}
+                    zoneName={zoneName}
+                    setUpdateValidated={setUpdateValidated}
+                    />
             </div>
         : null
       }
@@ -98,6 +78,10 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
               setZoneName(e.target.value);
             }  
           }
+          onBlur={() => 
+          {
+            contentChanged ? setUpdateValidated(true) : setUpdateValidated(false);
+          }}
           ref={inputRef}
           className="zone-name-input"
         />
