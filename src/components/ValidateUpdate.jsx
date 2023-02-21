@@ -2,17 +2,17 @@ import './../styles/ValidateUpdate.css';
 import Axios from 'axios';
 import {toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
-function ValidateUpdate({type, operation, zone, data, setData, setZoneToDetail, index, zoneName,setUpdateValidated,setZoneName, setZoneClicked}) {
-
+function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail, index, zoneName,setUpdateValidated,setZoneName, setZoneClicked}) 
+{
   function apply() {
     if (type === 'zones') {
       if (operation === 'update')
       {
-        const reqObj = { ...zone, name: zoneName };
-        setZoneToDetail(reqObj);
-        setData(data.map((zone, i) => (i === index ? reqObj : zone)));
+        const reqObj = { ...info, name: zoneName };
+        setInfoToDetail(reqObj);
+        setData(data.map((info, i) => (i === index ? reqObj : info)));
         // send a request to the server to update the zone name
-        Axios.put(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`, 
+        Axios.put(`${process.env.REACT_APP_API_URL}/zones/${info._id}`, 
           reqObj
         )
         .then(res => 
@@ -35,7 +35,7 @@ function ValidateUpdate({type, operation, zone, data, setData, setZoneToDetail, 
       else if (operation === 'delete')
       {
         setZoneClicked(false);
-        Axios.delete(`${process.env.REACT_APP_API_URL}/zones/${zone._id}`)
+        Axios.delete(`${process.env.REACT_APP_API_URL}/zones/${info._id}`)
         .then(res => {
           console.log(res.data);
           toast.success('The Zone Is Deleted Succesfully!', {
@@ -47,7 +47,7 @@ function ValidateUpdate({type, operation, zone, data, setData, setZoneToDetail, 
             draggable: true,
             progress: undefined,
           });
-          setData(data.filter((zone, i) => i !== index));
+          setData(data.filter((info, i) => i !== index));
         })
         .catch(err => console.log(err));    
       }
@@ -61,8 +61,8 @@ function ValidateUpdate({type, operation, zone, data, setData, setZoneToDetail, 
         <div className="validate-update-title">
           <h5>
             {
-              type === 'zones' && operation === 'update' ? `Voulez-vous vraiment modifier le nom de la zone ${zone.name} en ${zoneName} ?` :
-              type === 'zones' && operation === 'delete' ? `Voulez-vous vraiment supprimer la zone ${zone.name} ?` :
+              type === 'zones' && operation === 'update' ? `Voulez-vous vraiment modifier le nom de la zone ${info.name} en ${zoneName} ?` :
+              type === 'zones' && operation === 'delete' ? `Voulez-vous vraiment supprimer la zone ${info.name} ?` :
               null
             }
           </h5>
@@ -73,7 +73,7 @@ function ValidateUpdate({type, operation, zone, data, setData, setZoneToDetail, 
             {
               setUpdateValidated(false);
               // change the state of the name of the zone to the old one
-              setZoneName(zone.name);
+              setZoneName(info.name);
             }
             }>Non</Button>
         </div>

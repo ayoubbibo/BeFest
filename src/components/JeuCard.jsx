@@ -6,11 +6,13 @@ function JeuCard({jeu, index}){
     return(
         <li className="jeu-card-li" key={index}>
             <div className="jeu-card-content">
-                <div className="jeu-card-header">
-                    {jeu.name}
+                <div className="jeu-card-name">
+                    <div className="jeu-card-name-text"> Nom du jeu </div>
+                    <span> {jeu.name}   </span>
                 </div>
-                <div className="jeu-card-body">
-                    {jeu.type}
+                <div className="jeu-card-type">
+                    <div className="jeu-card-type-text"> Type du jeu </div>
+                    <span> {jeu.type} </span>
                 </div> 
             </div>
         </li>

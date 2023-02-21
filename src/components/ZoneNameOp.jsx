@@ -37,10 +37,10 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
         updateValidated ? 
             <div className="zone-update-Validator">
                 <ValidateUpdate type="zones" operation={operation}
-                    zone={zone} 
+                    info={zone} 
                     data={data} 
                     setData={setData} 
-                    setZoneToDetail={setZoneToDetail} 
+                    setInfoToDetail={setZoneToDetail} 
                     index={index}
                     zoneName={zoneName}
                     setUpdateValidated={setUpdateValidated}

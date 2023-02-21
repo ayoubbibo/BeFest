@@ -1,0 +1,39 @@
+.jeu-details{
+    /* place it in the center of the parent */
+    position: fixed;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+
+.jeu-li-details-info
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color : black;
+    width: 50%;
+    height: 50%;
+    border-radius: 0.7em;  
+    background: rgba(255, 255, 255, 1);
+    padding: 30px;
+    padding-top: 5%;
+    margin: 10px;
+}
+
+@media screen and (max-width: 900px) {
+    .jeu-li-details-info
+    {
+        width: 90%;
+        height: 90%;
+        padding-top: 90px;
+    }
+}
+

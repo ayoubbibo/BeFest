@@ -50,8 +50,7 @@ function AjouteJeu({data, setData, options}){
                 />
             </Form.Group>
             <Form.Group className="mb-3" >
-                <Form.Select onChange={(e) => setTypeJeu(e.target.value)}>
-                    <option>Choisir le type de jeu</option>
+                <Form.Select onChange={(e) => setTypeJeu(e.target.value)} placeholder="Choisir le type de jeu">
                     {
                         options.map((option) =>(
                             <option key={option._id}>{option.name}</option>
