@@ -3,6 +3,9 @@ import Benevole from './Benevole';
 import Jeux from './Jeux';
 import {Route, Routes, useLocation} from 'react-router-dom';
 import NoExistingPage from './NoExistingPage';
+import Login from './Login';
+import Register from './Register';
+import Profile from './Profile';
 
 /**
  *  this function It enables the navigation among views of various components in a React 
@@ -21,6 +24,9 @@ function Routeur()
             <Route path="/Jeux" element={<Jeux />}/>
             <Route path="/" exact element={<Zones />}/>
             <Route path="*" element={<NoExistingPage />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/register" element={<Register />}/>
+            <Route path="/profile" element={<Profile />}/>
         </Routes>
     );
 }
