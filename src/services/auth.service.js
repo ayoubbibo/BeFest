@@ -18,14 +18,12 @@ const register = (firstname, lastname, email, password, role) => {
 
 
 const login = (email, password) => {
-    console.log("login")
     return client.post('/signin', {
         email, 
         password
     })
      .then(response => {
-        console.log("response", response)
-        if (response.data.userId) {
+        if (response.data._id) {
             localStorage.setItem('user', JSON.stringify(response.data));
         }
         return response.data;
