@@ -1,10 +1,14 @@
 import '../styles/JeuCard.css';
 
 
-function JeuCard({jeu, index}){
-    console.table(jeu)
-    return(
-        <li className="jeu-card-li" key={index}>
+function JeuCard({  jeu, index,setJeuClicked, setJeuToDetail, setJeuDetailsIndex}){
+    const handleClick = () => {
+        setJeuClicked(true);
+        setJeuToDetail(jeu);
+        setJeuDetailsIndex(index);
+    }
+ return(
+        <li className="jeu-card-li" key={index} onClick={handleClick}>
             <div className="jeu-card-content">
                 <div className="jeu-card-name">
                     <div className="jeu-card-name-text"> Nom du jeu </div>

@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { toast } from 'react-toastify';
 
 
-function AjouteJeu({data, setData, options}){
+function AjouteJeu({data, setData, options, setajouteJeu}){
 
     const [nomJeu, setNomJeu] = useState('');
     const [typeJeu, setTypeJeu] = useState('');
@@ -32,6 +32,7 @@ function AjouteJeu({data, setData, options}){
                 progress: undefined,
                 theme: "light",
             });
+            setajouteJeu(true);
         })
         .catch(err => console.log(err));
     }

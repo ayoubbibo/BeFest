@@ -42,12 +42,12 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
         else {
           inputNameRef.current.focus();
         }
-      }
+    }
     
-      function tryDelete() {
+    function tryDelete() {
         setOperation('delete');
         setUpdateValidated(true);
-      }
+    }
       
 
     return(

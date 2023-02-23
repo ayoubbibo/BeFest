@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './../styles/ZoneDetails.css';
 import ZoneNameOp from './ZoneNameOp';
 
-function ZoneDetails({zone, setZoneToDetail, setZoneClicked, index, setData, data, showZone}) {
+function ZoneDetails({zone, setZoneToDetail, setZoneClicked, index, setData, data}) {
   const detailsRef = useRef(null);
 
   
