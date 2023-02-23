@@ -43,7 +43,14 @@ function showZoneDetails(zone,index){
 function addZone(event){
     event.preventDefault();
     Axios.post(`${process.env.REACT_APP_API_URL}/zones`, {
-        name: newZoneName
+        name: newZoneName,
+        jeux : [
+            {
+                name : "cache cache",
+                type : "ambiance",
+                _id : "63f75d90846ad9ffd205686c"
+            }
+        ]
     })
     .then(res => {
         console.log(res.data);    document.body.classList.add("fixed");

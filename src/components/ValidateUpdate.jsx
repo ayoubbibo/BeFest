@@ -8,9 +8,6 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
 }) 
 {
   function apply() {
-
-    console.log('apply');
-    console.log(index);
     if (type === 'zones') {
       if (operation === 'update')
       {
@@ -18,7 +15,6 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
         setInfoToDetail(reqObj);
         
         setData(data.map((info, i) => (i === index ? reqObj : info)));
-
 
         // send a request to the server to update the zone name
         Axios.put(`${process.env.REACT_APP_API_URL}/zones/${info._id}`, 
@@ -133,7 +129,7 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
             {
               type === 'zones' && operation === 'update' ? `Voulez-vous vraiment modifier le nom de la zone ${info.name} en ${zoneName} ?` :
               type === 'zones' && operation === 'delete' ? `Voulez-vous vraiment supprimer la zone ${info.name} ?` :
-              type === 'jeux' && operation === 'update' ? `Voulez-vous vraiment modifier le nom du jeu ${info.name} en ${zoneName} ?` :
+              type === 'jeux' && operation === 'update' ? `Voulez-vous vraiment modifier le nom du jeu ${info.name} en ${jeuName} ?` :
               type === 'jeux' && operation === 'delete' ? `Voulez-vous vraiment supprimer le jeu ${info.name} ?` :
               null
             }

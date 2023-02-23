@@ -6,10 +6,7 @@ import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import ValidateUpdate from './ValidateUpdate';
 
 
-
-
 function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDetail}) {
-
     const detailsRef = useRef(null);
     const inputNameRef = useRef(null);
     const [jeuName, setJeuName] = useState(jeu.name);
@@ -18,7 +15,6 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
     const [operation, setOperation] = useState('');
     const [contentChanged, setcontentChanged] = useState(false);
 
-      
     useEffect(() => {
         function handleClickOutside(event) {
             if (detailsRef.current && !detailsRef.current.contains(event.target)) {
@@ -48,8 +44,8 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
         setOperation('delete');
         setUpdateValidated(true);
     }
-      
 
+ 
     return(
         <div className="jeu-li-details-info" ref={detailsRef}>
             {
@@ -71,23 +67,58 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
                     </div>
                 : null
             }
-            <InputGroup>
-                <Form.Control
-                    placeholder={jeuName}
-                    value={jeuName}
-                    onChange={(e) => 
-                        {   
-                            setcontentChanged(true);
-                            setJeuName(e.target.value);
+            <div className="jeu-li-details-update">
+                <InputGroup className='inputs-grp'>
+                    <Form.Control
+                        placeholder={jeuName}
+                        value={jeuName}
+                        onChange={(e) => 
+                            {   
+                                setcontentChanged(true);
+                                setJeuName(e.target.value);
+                            }
+                    }
+                    ref={inputNameRef}
+                    className="zone-name-input"
+                    />
+                    <Form.Select 
+                        placeholder={jeuType}
+                        value={jeuType} 
+                        className="zone-name-input"       
+                        onChange={(e) => 
+                            {
+                                setcontentChanged(true);
+                                setJeuType(e.target.value);
+                            }
+                        }>
+                        {
+                            options.map((option) =>(
+                                <option key={option._id}>{option.name}</option>
+                                )   
+                            )
                         }
-                }
-                ref={inputNameRef}
-                className="zone-name-input"
-                />
-                <Form.Select 
-                    placeholder={jeuType}
-                    value={jeuType}        
-                    onChange={(e) => 
+                        
+                    </Form.Select>
+                </InputGroup>
+                <div className="updates">
+                    <Button variant="outline-warning" className='update-btn' onClick={() => tryUpdate()}>
+                    <FontAwesomeIcon icon={faPen}/>
+                    </Button>
+                    <Button variant="outline-danger" onClick={() => tryDelete()}
+                        className="delete-btn">
+                    <FontAwesomeIcon icon={faTrashAlt}/>
+                    </Button>
+                </div>
+            </div>
+
+            <div className="affectation-to-zone">
+                <h5>la zone d'affectation de ce jeu est : </h5>
+                <h5>{jeu.zone.name}</h5>
+
+                <h5>Changer la zone d'affectation de ce jeu : </h5>
+                <Form.Select
+                    className="zone-name-input"
+                    onChange={(e) =>
                         {
                             setcontentChanged(true);
                             setJeuType(e.target.value);
@@ -96,20 +127,10 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
                     {
                         options.map((option) =>(
                             <option key={option._id}>{option.name}</option>
-                            )   
+                            )
                         )
                     }
                 </Form.Select>
-            </InputGroup>
-
-            <div className="updates">
-                <Button variant="outline-warning" className='update-btn' onClick={() => tryUpdate()}>
-                <FontAwesomeIcon icon={faPen}/>
-                </Button>
-                <Button variant="outline-danger" onClick={() => tryDelete()}
-                className="delete-btn">
-                <FontAwesomeIcon icon={faTrashAlt}/>
-                </Button>
             </div>
         </div>
     )
