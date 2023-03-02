@@ -19,8 +19,9 @@ export default function AffectionZone({jeu}) {
       .then(res => {
         // si on récupère un tableau vide, on met dans zone Affecté un name aucune zone affecté
         if (res.data === null) {
-            setZoneAffected({name: "Aucune zone affectée"});
-        }
+            setZoneAffected({name: 'Aucune zone affectée', _id: '12345',jeux: []});
+            setZoneName('Aucune zone affectée');
+          }
         else {
             setZoneAffected(res.data);
             setZoneName(res.data.name);
@@ -35,7 +36,7 @@ export default function AffectionZone({jeu}) {
     // get all the zone names from the api
     Axios.get(`${process.env.REACT_APP_API_URL}/zones`)
       .then(res => {
-        setOpt([...res.data, { name: 'Aucune zone affectée', _id: '12345'}]);
+        setOpt([...res.data, { name: 'Aucune zone affectée', _id: '12345',jeux: []}]);
       }
       )
       .catch(err => {
@@ -48,9 +49,10 @@ export default function AffectionZone({jeu}) {
   const affecteToZone = (zone) => {
     // get the zone id from the name in the table opt
     const zoneId = opt.find(z => z.name === zone)._id;
-    const newZone = {name: zone, _id: zoneId, jeux: zoneAffected.jeux};
+    const newZone = {name: zone, _id: zoneId, jeux: opt.find(z => z.name === zone).jeux};
     setNewZoneAffected(newZone);
     setZoneName(zone);
+    setAffectationValidated(true);
   }
 
 
@@ -63,8 +65,9 @@ export default function AffectionZone({jeu}) {
           <div className="zone-update-Validator">
             <ValidateUpdate type="jeux" operation="add"
               info={newZoneAffected}
+              data={zoneAffected}
               setUpdateValidated={setAffectationValidated}
-              
+              index={jeu}
             />
           </div>
         : null

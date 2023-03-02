@@ -106,25 +106,66 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
         .catch(err => console.log(err));    
       }
       else if (operation === 'add'){
-        // affecte le jeu à la zone
-        Axios.put(`${process.env.REACT_APP_API_URL}/zones/${info._id}`,
-          {jeux: [...info.jeux, jeuName]}
-        )
-        .then(res => {
-          console.log(res.data);
-          toast.success('The Game Is Affectated Succesfully!', {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          setUpdateValidated(false);
+        if(info.name === 'Aucune zone affectée')
+        {
+          // enlever le jeu de la liste des jeux de l'ancienne zone
+          if(data.jeux.length > 0)
+          {
+            Axios.put(`${process.env.REACT_APP_API_URL}/zones/${data._id}`,
+              {jeux: data.jeux.filter(jeu => jeu._id !== index._id)}
+            )
+            .then(res => {
+              console.log(res.data);
+              toast.success('Le jeu à été bien affecté', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              setUpdateValidated(false);
+            }
+            )
+            .catch(err => console.log(err));
+          }
         }
-        )
-        .catch(err => console.log(err)); 
+        else
+        {
+          // affecte le jeu à la zone
+          Axios.put(`${process.env.REACT_APP_API_URL}/zones/${info._id}`,
+            {jeux: [...info.jeux, index]}
+          )
+          .then(res => {
+            console.log(res.data);
+          }
+          )
+          .catch(err => console.log(err));
+          
+          // enlever le jeu de la liste des jeux de l'ancienne zone
+          if(data.jeux.length > 0)
+          {
+            Axios.put(`${process.env.REACT_APP_API_URL}/zones/${data._id}`,
+              {jeux: data.jeux.filter(jeu => jeu._id !== index._id)}
+            )
+            .then(res => {
+              console.log(res.data);
+              toast.success('Le jeu à été bien affecté', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              setUpdateValidated(false);
+            }
+            )
+            .catch(err => console.log(err));
+          }
+        }
       }
     }
   }
