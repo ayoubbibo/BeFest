@@ -105,6 +105,27 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
         })
         .catch(err => console.log(err));    
       }
+      else if (operation === 'add'){
+        // affecte le jeu à la zone
+        Axios.put(`${process.env.REACT_APP_API_URL}/zones/${info._id}`,
+          {jeux: [...info.jeux, jeuName]}
+        )
+        .then(res => {
+          console.log(res.data);
+          toast.success('The Game Is Affectated Succesfully!', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setUpdateValidated(false);
+        }
+        )
+        .catch(err => console.log(err)); 
+      }
     }
   }
 
@@ -127,10 +148,9 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
         <div className="validate-update-title">
           <h5>
             {
-              type === 'zones' && operation === 'update' ? `Voulez-vous vraiment modifier le nom de la zone ${info.name} en ${zoneName} ?` :
-              type === 'zones' && operation === 'delete' ? `Voulez-vous vraiment supprimer la zone ${info.name} ?` :
-              type === 'jeux' && operation === 'update' ? `Voulez-vous vraiment modifier le nom du jeu ${info.name} en ${jeuName} ?` :
-              type === 'jeux' && operation === 'delete' ? `Voulez-vous vraiment supprimer le jeu ${info.name} ?` :
+              operation === 'update' ? `Voulez-vous vraiment sauvegarder les modifications ?` :
+              operation === 'delete' ? `Voulez-vous vraiment confirmer la suppression ?` :
+              operation === 'add' ? `Voulez-vous vraiment confirmer l'afectation ?` :
               null
             }
           </h5>

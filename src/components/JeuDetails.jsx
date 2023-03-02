@@ -1,10 +1,10 @@
 import '../styles/JeuDetails.css'
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import ValidateUpdate from './ValidateUpdate';
-import Axios from 'axios';
+import AffectionZone  from './AffectionZone';
 
 
 function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDetail}) {
@@ -12,38 +12,25 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
     const inputNameRef = useRef(null);
     const [jeuName, setJeuName] = useState(jeu.name);
     const [jeuType, setJeuType] = useState(jeu.type);
-    const [zoneAffected, setZoneAffected] = useState({});
     const [updateValidated, setUpdateValidated] = useState(false);
     const [operation, setOperation] = useState('');
     const [contentChanged, setcontentChanged] = useState(false);
     
-    
-    useEffect(() => {
-        Axios.get(`${process.env.REACT_APP_API_URL}/zones/jeu/${jeu._id}`)
-          .then(res => {
-
-            // si on récupère un tableau vide, on met dans zone Affecté un name aucune zone affecté
-            if (res.data === null) {
-                setZoneAffected({name: "Aucune zone affectée"});
-            }
-            else {
-                setZoneAffected(res.data);
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      });
 
 
   
     useEffect(() => {
         function handleClickOutside(event) {
-            if (detailsRef.current && !detailsRef.current.contains(event.target)) {
+            if (detailsRef.current && !detailsRef.current.contains(event.target)
+                &&!event.target.getAttribute('class')?.includes('MuiAutocomplete')
+            )
+            {
                 setJeuClicked(false);
             }
+            else {
+                setJeuClicked(true);
+            }
         }
-
         document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
@@ -51,9 +38,6 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
         };
     });
 
-       
-
-    
     function tryUpdate() {
         if (contentChanged) 
         {
@@ -135,30 +119,9 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
                     </Button>
                 </div>
             </div>
-
-            <div className="affectation-to-zone">
-                <h5>la zone d'affectation de ce jeu est : </h5>
-                <h5>{
-                        zoneAffected.name === 'Aucune zone affectée' ? 'Aucune zone affectée' : zoneAffected.name 
-                    }</h5>
-
-                <h5>Changer la zone d'affectation de ce jeu : </h5>
-                <Form.Select
-                    className="zone-name-input"
-                    onChange={(e) =>
-                        {
-                            setcontentChanged(true);
-                            setJeuType(e.target.value);
-                        }
-                    }>
-                    {
-                        options.map((option) =>(
-                            <option key={option._id}>{option.name}</option>
-                            )
-                        )
-                    }
-                </Form.Select>
-            </div>
+            <AffectionZone 
+                jeu={jeu}
+            />
         </div>
     )
 }
