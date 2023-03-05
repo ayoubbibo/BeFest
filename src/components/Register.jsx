@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import bcrypt from "bcryptjs";
 
 import AuthService from "../services/auth.service";
 
@@ -43,7 +44,7 @@ const vpassword = (value) => {
 if (value.length < 4 || value.length > 40) {
     return (
     <div className="invalid-feedback d-block">
-        The password must be between 6 and 40 characters.
+        The password must be between 4 and 40 characters.
     </div>
     );
 }
@@ -100,23 +101,27 @@ function Register(){
         form.current.validateAll();
 
         if (checkBtn.current.context._errors.length === 0) {
-            AuthService.register(firstname, lastname, email, password, role).then(
-                (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
-                },
-                (error) => {
-                    const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
 
-                    setMessage(resMessage);
-                    setSuccessful(false);
-                }
-            );
+            bcrypt.hash(password, 10).then((hash) => {
+                console.log(hash);
+                AuthService.register(firstname, lastname, email, hash, role).then(
+                    (response) => {
+                        setMessage(response.data.message);
+                        setSuccessful(true);
+                    },
+                    (error) => {
+                        const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                        setMessage(resMessage);
+                        setSuccessful(false);
+                    }
+                );
+            });
         } else {
             setLoading(false);
         }
