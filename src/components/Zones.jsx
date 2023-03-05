@@ -20,7 +20,7 @@ useEffect(() => {
 }, [])
 
 const getZones = () => {
-    Axios.get(`${process.env.REACT_APP_API_URL}/zones/`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/zones`)
     .then(res => {
         console.log("We got the data that we need ",res.data)
         setData(res.data);
@@ -43,7 +43,14 @@ function showZoneDetails(zone,index){
 function addZone(event){
     event.preventDefault();
     Axios.post(`${process.env.REACT_APP_API_URL}/zones`, {
-        name: newZoneName
+        name: newZoneName,
+        jeux : [
+            {
+                name : "touche touche",
+                type : "expert",
+                _id : "63f75db3846ad9ffd205688a"
+            }
+        ]
     })
     .then(res => {
         console.log(res.data);    document.body.classList.add("fixed");

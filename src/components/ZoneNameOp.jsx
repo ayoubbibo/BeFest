@@ -17,8 +17,15 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
   function tryUpdate() {
     if (contentChanged) 
     {
-      setOperation('update');
-      setUpdateValidated(true);
+      if (zoneName !== zone.name)
+      {
+        setOperation('update');
+        setUpdateValidated(true);
+      }
+      else
+      {
+        
+      }
     }
     else {
       inputRef.current.focus();
@@ -56,13 +63,22 @@ const ZoneNameOp = ({ zone, setZoneToDetail, setZoneClicked, index, setData, dat
           value={zoneName}
           onChange={(e) => 
             {
-              setcontentChanged(true);
-              setZoneName(e.target.value);
+              if (e.target.value !== zoneName)
+              {
+                setcontentChanged(true);
+                setZoneName(e.target.value);
+              } else {
+                setcontentChanged(false);
+              }
             }  
           }
           onBlur={() => 
-          {
-            contentChanged ? setUpdateValidated(true) : setUpdateValidated(false);
+          { 
+            if (zoneName !== zone.name)
+            {
+              setUpdateValidated(true);
+              setOperation('update');
+            }
           }}
           ref={inputRef}
           className="zone-name-input"

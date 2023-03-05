@@ -1,12 +1,12 @@
 import '../styles/JeuCard.css';
 
-
 function JeuCard({  jeu, index,setJeuClicked, setJeuToDetail, setJeuDetailsIndex}){
     const handleClick = () => {
         setJeuClicked(true);
-        setJeuToDetail(jeu);
         setJeuDetailsIndex(index);
+        setJeuToDetail(jeu);
     }
+ 
  return(
         <li className="jeu-card-li" key={index} onClick={handleClick}>
             <div className="jeu-card-content">

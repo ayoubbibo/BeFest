@@ -1,15 +1,13 @@
 import '../styles/JeuDetails.css'
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import ValidateUpdate from './ValidateUpdate';
-
-
+import AffectionZone  from './AffectionZone';
 
 
 function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDetail}) {
-
     const detailsRef = useRef(null);
     const inputNameRef = useRef(null);
     const [jeuName, setJeuName] = useState(jeu.name);
@@ -17,15 +15,22 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
     const [updateValidated, setUpdateValidated] = useState(false);
     const [operation, setOperation] = useState('');
     const [contentChanged, setcontentChanged] = useState(false);
+    
 
-      
+
+  
     useEffect(() => {
         function handleClickOutside(event) {
-            if (detailsRef.current && !detailsRef.current.contains(event.target)) {
+            if (detailsRef.current && !detailsRef.current.contains(event.target)
+                &&!event.target.getAttribute('class')?.includes('MuiAutocomplete')
+            )
+            {
                 setJeuClicked(false);
             }
+            else {
+                setJeuClicked(true);
+            }
         }
-
         document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
@@ -48,8 +53,8 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
         setOperation('delete');
         setUpdateValidated(true);
     }
-      
 
+ 
     return(
         <div className="jeu-li-details-info" ref={detailsRef}>
             {
@@ -71,46 +76,52 @@ function JeuDetails({jeu,index,setJeuClicked, options, data, setData, setJeuToDe
                     </div>
                 : null
             }
-            <InputGroup>
-                <Form.Control
-                    placeholder={jeuName}
-                    value={jeuName}
-                    onChange={(e) => 
-                        {   
-                            setcontentChanged(true);
-                            setJeuName(e.target.value);
-                        }
-                }
-                ref={inputNameRef}
-                className="zone-name-input"
-                />
-                <Form.Select 
-                    placeholder={jeuType}
-                    value={jeuType}        
-                    onChange={(e) => 
-                        {
-                            setcontentChanged(true);
-                            setJeuType(e.target.value);
-                        }
-                    }>
-                    {
-                        options.map((option) =>(
-                            <option key={option._id}>{option.name}</option>
-                            )   
-                        )
+            <div className="jeu-li-details-update">
+                <InputGroup className='inputs-grp'>
+                    <Form.Control
+                        placeholder={jeuName}
+                        value={jeuName}
+                        onChange={(e) => 
+                            {   
+                                setcontentChanged(true);
+                                setJeuName(e.target.value);
+                            }
                     }
-                </Form.Select>
-            </InputGroup>
-
-            <div className="updates">
-                <Button variant="outline-warning" className='update-btn' onClick={() => tryUpdate()}>
-                <FontAwesomeIcon icon={faPen}/>
-                </Button>
-                <Button variant="outline-danger" onClick={() => tryDelete()}
-                className="delete-btn">
-                <FontAwesomeIcon icon={faTrashAlt}/>
-                </Button>
+                    ref={inputNameRef}
+                    className="zone-name-input"
+                    />
+                    <Form.Select 
+                        placeholder={jeuType}
+                        value={jeuType} 
+                        className="zone-name-input"       
+                        onChange={(e) => 
+                            {
+                                setcontentChanged(true);
+                                setJeuType(e.target.value);
+                            }
+                        }>
+                        {
+                            options.map((option) =>(
+                                <option key={option._id}>{option.name}</option>
+                                )   
+                            )
+                        }
+                        
+                    </Form.Select>
+                </InputGroup>
+                <div className="updates">
+                    <Button variant="outline-warning" className='update-btn' onClick={() => tryUpdate()}>
+                    <FontAwesomeIcon icon={faPen}/>
+                    </Button>
+                    <Button variant="outline-danger" onClick={() => tryDelete()}
+                        className="delete-btn">
+                    <FontAwesomeIcon icon={faTrashAlt}/>
+                    </Button>
+                </div>
             </div>
+            <AffectionZone 
+                jeu={jeu}
+            />
         </div>
     )
 }
