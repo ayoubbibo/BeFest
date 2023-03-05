@@ -1,11 +1,12 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/auth.service';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import SpecialButton from './SpecialButton';
 
 //To display the message if there is a required information not provided by the user
 const required = (value) => {
@@ -41,12 +42,6 @@ function Login() {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-
-
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
-        console.debug(user);
-    }, []);
 
 
     const onChangeEmail = (e) => {
@@ -85,7 +80,7 @@ function Login() {
 
     return (
         <div>
-            <div  style={{width: "50%", marginLeft: "auto", marginRight: "auto", color:"black"}}>
+            <div  style={{width: "50%", marginLeft: "auto", marginRight: "auto", color:"black", backgroundColor: "lightcyan", borderRadius: "10px", padding: "20px"}}>
                 <h1>Login</h1>
                 <Form ref={form} onSubmit={handleRegister}>
                     <div>
@@ -97,12 +92,12 @@ function Login() {
                         <Input type="password" className="form-control" name="password" value={password} onChange={onChangePassword} validations={[required]}/>
                     </div>
                     <div>
-                        <button className="btn btn-primary btn-block" disabled={loading}>
-                            {loading && (
+                        <SpecialButton style={{marginTop: "20px",height: "45px", width: "120px"}} handleClick={() => {}} text={"Login"} disabled={loading} />
+
+                        {loading && (
                                 <span className="spinner-border spinner-border-sm"></span>
                             )}
-                            <span>Login</span>
-                        </button>
+
                     </div>
                     {message && (
                         <div className="form-group">
