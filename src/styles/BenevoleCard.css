@@ -6,11 +6,11 @@
     justify-content: center;
     border-bottom: 3px solid #FFC069;
     color: grey;
-    width: 200px;
+    width: 160px;
+    height: 90px;
     font-size: 15px;
     margin-top: 15px;
     background-color: white;
-
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
@@ -25,21 +25,10 @@
     color: grey;
 }
 
-.ben-li-body > *
-{
-    margin: 0 10px;
-}
+
 
 .ben-cover__item
 {
     width: 60px;
     height: 60px;
-}
-
-.cont
-{
-    width: 200px;
-    height: 200px;
-    border: 1px solid #dddddd;
-    float: right;  
 }

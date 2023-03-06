@@ -1,0 +1,27 @@
+.ben-result-list
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.ben-result-list-body
+{
+    /* remove the list-style-type */
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 600px;
+    scrollbar-width: thin;
+    scrollbar-color: #FFC069 #E9E8E8;
+    padding: 15px;
+}

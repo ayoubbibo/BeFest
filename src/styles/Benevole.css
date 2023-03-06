@@ -36,3 +36,15 @@
     flex-wrap: wrap;
     margin: 15px;
 }
+
+.ben-content-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 15px;
+}

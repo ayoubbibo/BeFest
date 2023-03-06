@@ -29,8 +29,9 @@ export default function BenSearchBar({listBen}) {
             onChange={(event, newValue) => {
                 
             }}
-            /*onInputChange={(event, newInputValue) => {
-                setZoneAffected({name: newInputValue});
+            /*
+                onInputChange={(event, newInputValue) => {
+                    setZoneAffected({name: newInputValue});
                 }} 
             */
             id="controllable-states-demo"
