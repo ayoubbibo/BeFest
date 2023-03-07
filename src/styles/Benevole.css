@@ -7,24 +7,6 @@
     flex-direction: row;
 }
 
-.ben-search-fields
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 80px;
-    width: 70%;
-    background-color: white;
-    border-radius: 1em;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-}
-
-.ben-search-fields > * 
-{
-    margin: 10px;
-}
-
 .ben-container
 {
     display: flex;
