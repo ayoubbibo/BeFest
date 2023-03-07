@@ -6,13 +6,14 @@ import { ToastContainer } from 'react-toastify';
 import BenSearchBar from './BenSearchBar';
 import BenResultList from './BenResultList';
 import BenService from '../services/benevole.service';
-
+import AffectationBenList from './AffectationBenList';
 
 
 
 function Benevole(){
 
     const [listBen, setListBen] = useState([]);
+    const [filterOn, setFilterOn] = useState(false);
     
     React.useEffect(() => {
         BenService.getAllBen()
@@ -26,7 +27,6 @@ function Benevole(){
         );
     }, [])
     
-
     return(
         <div className="app">
             <Header></Header>
@@ -41,13 +41,14 @@ function Benevole(){
                     */
                 }
                 <div className="ben-container">
-                    <BenSearchBar listBen={listBen}/>
+                    <BenSearchBar listBen={listBen} filterOn={filterOn} setFilterOn={setFilterOn}/>
                     <div className="ben-content-container">
                         <div className="ben-search-results">
                             <BenResultList results={listBen}/>
                         </div>
-                        <div className="ben-choosed-calendar">
-
+                        <div className="ben-affectation-list">
+                            <h1>Ben Affectation List</h1>
+                            <AffectationBenList filterOn={filterOn}/>
                         </div>
                     </div> 
                 </div>
