@@ -2,6 +2,8 @@ import './../styles/ValidateUpdate.css';
 import Axios from 'axios';
 import {toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
+import { deleteZone, updateZone } from '../services/zone.service';
+import { updateJeu } from '../services/jeu.service';
 function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,index,
   jeuName, setJeuName, jeuType, setJeuType,setJeuClicked, 
   zoneName,setUpdateValidated,setZoneName, setZoneClicked
@@ -17,12 +19,8 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
         setData(data.map((info, i) => (i === index ? reqObj : info)));
 
         // send a request to the server to update the zone name
-        Axios.put(`${process.env.REACT_APP_API_URL}/zones/${info._id}`, 
-          reqObj
-        )
-        .then(res => 
-          {
-            console.log(res.data);
+        updateZone(info, reqObj)
+          .then(() => {
             toast.success('The Zone Is Updated Succesfully!', {
               position: "top-center",
               autoClose: 3000,
@@ -33,17 +31,14 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
               progress: undefined,
             });
             setUpdateValidated(false);
-          }  
-        )
-        .catch(err => console.log(err));
+          })
       }
       else if (operation === 'delete')
       {
         
         setZoneClicked(false);
-        Axios.delete(`${process.env.REACT_APP_API_URL}/zones/${info._id}`)
-        .then(res => {
-          console.log(res.data);
+        deleteZone(info._id)
+        .then(() => {
           toast.success('The Zone Is Deleted Succesfully!', {
             position: "top-center",
             autoClose: 3000,
@@ -54,8 +49,7 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
             progress: undefined,
           });
           setData(data.filter((info, i) => i !== index));
-        })
-        .catch(err => console.log(err));    
+        })  
       }
     }
     else if (type === 'jeux') {
@@ -66,12 +60,8 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
         setData(data.map((info, i) => (i === index ? reqObj : info)));
 
         // send a request to the server to update the zone name
-        Axios.put(`${process.env.REACT_APP_API_URL}/jeux/${info._id}`, 
-          reqObj
-        )
-        .then(res => 
-          {
-            console.log(res.data);
+        updateJeu(info._id, reqObj)
+          .then(() => {
             toast.success('The Game Is Updated Succesfully!', {
               position: "top-center",
               autoClose: 3000,
@@ -82,9 +72,7 @@ function ValidateUpdate({type, operation, info, data, setData, setInfoToDetail,i
               progress: undefined,
             });
             setUpdateValidated(false);
-          }  
-        )
-        .catch(err => console.log(err));
+          })
       }
       else if (operation === 'delete')
       {

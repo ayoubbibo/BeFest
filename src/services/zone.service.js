@@ -17,3 +17,25 @@ export const getAllZones = () => {
             console.log(err)
         })
 }
+
+
+export const deleteZone = (idZone) => {
+    return client.delete('/zones/'+idZone)
+        .then(res => {
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+
+export const updateZone = (info, obj) => {
+    return client.put('/zones/'+info._id, obj)
+        .then(res => {
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}

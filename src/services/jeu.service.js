@@ -36,3 +36,14 @@ export const getJeuByZone = (idZone) => {
 export const getJeuByType = (typeJeu) => {
     return client.get('/type/'+typeJeu);
 }
+
+
+export const updateJeu = (id, obj) => {
+    return client.put('/'+id, obj)
+        .then(res => {
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
