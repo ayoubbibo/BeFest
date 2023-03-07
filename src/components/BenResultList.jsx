@@ -1,26 +1,10 @@
 import '../styles/BenResultList.css';
 import * as React from 'react';
-import BenService from '../services/benevole.service';
 import BenevoleCard from './BenevoleCard';
 import { randomAvatar } from './AvatarGenerator';
 
-export default function BenResultList({}) {
-    const [results, setResults] = React.useState([]);
-
-    React.useEffect(() => {
-        BenService.getAllBen()
-        .then((response) => {
-            setResults(response.data);
-        }
-        )
-        .catch((error) => {
-            console.log(error);
-        }
-        );
-    }, [])
+export default function BenResultList({results}) {
     
-    console.log(results);
-
     return (
         <div className="ben-result-list">
             <div className="ben-result-list-header">

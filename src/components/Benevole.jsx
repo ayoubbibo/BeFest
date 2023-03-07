@@ -5,6 +5,7 @@ import React, { useState} from 'react';
 import { ToastContainer } from 'react-toastify';
 import BenSearchBar from './BenSearchBar';
 import BenResultList from './BenResultList';
+import BenService from '../services/benevole.service';
 
 
 
@@ -12,6 +13,19 @@ import BenResultList from './BenResultList';
 function Benevole(){
 
     const [listBen, setListBen] = useState([]);
+    
+    React.useEffect(() => {
+        BenService.getAllBen()
+        .then((response) => {
+            setListBen(response.data);
+        }
+        )
+        .catch((error) => {
+            console.log(error);
+        }
+        );
+    }, [])
+    
 
     return(
         <div className="app">
@@ -21,8 +35,8 @@ function Benevole(){
                 {
                     /*
                         <AjouteBen
-                        data={listBen}
-                        setData={setListBen}
+                            data={listBen}
+                            setData={setListBen}
                         ></AjouteBen>
                     */
                 }
@@ -30,7 +44,7 @@ function Benevole(){
                     <BenSearchBar listBen={listBen}/>
                     <div className="ben-content-container">
                         <div className="ben-search-results">
-                            <BenResultList/>
+                            <BenResultList results={listBen}/>
                         </div>
                         <div className="ben-choosed-calendar">
 

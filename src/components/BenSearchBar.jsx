@@ -5,8 +5,27 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MultiInputDateTimeRangeField } from '@mui/x-date-pickers-pro/MultiInputDateTimeRangeField';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Axios from 'axios';
 
 export default function BenSearchBar({listBen}) {
+
+  const [nameOption, setNameOption] = React.useState('');
+  const [zoneOption, setZoneOption] = React.useState('');
+
+  React.useEffect(() => {
+    // get all the zone names from the api
+    Axios.get(`${process.env.REACT_APP_API_URL}/zones`)
+      .then(res => {
+        setZoneOption([...res.data]);
+      }
+      )
+      .catch(err => {
+        console.log(err);
+      }
+      );
+  }, [])
+
+
   return (
     <div className="ben-search-fields">
         <Autocomplete
