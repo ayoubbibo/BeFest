@@ -1,21 +1,12 @@
 import axios from 'axios';
 
-
-
 const client = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: process.env.REACT_APP_API_URL+"/zones",
     json: true
-});
-
-
+    });
+    
 export const getAllZones = () => {
-    return client.get('/zones')
-        .then(res => {
-            return res.data
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    return client.get('/');
 }
 
 
@@ -39,3 +30,11 @@ export const updateZone = (info, obj) => {
             console.log(err)
         })
 }
+
+
+const ZoneService = {
+    getAllZones,
+}
+
+
+export default ZoneService;

@@ -24,7 +24,7 @@ function JeuSearch({setData, data}){
             .then(data => setTypesJeux(data));
 
         getAllZones()
-            .then(data => setZoneJeux(data));
+            .then((res) => setZoneJeux(res.data));
     }, [])
 
     
