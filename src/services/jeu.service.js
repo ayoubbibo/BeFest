@@ -9,3 +9,30 @@ const client = axios.create({
 export const addJeu = (nomJeu, typeJeu) => {
     return client.post('/', {name: nomJeu, type: typeJeu});
 }
+
+
+export const getAllJeux = () => {
+    return client.get('/')
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+
+export const getJeuByZone = (idZone) => {
+    return client.get('/zone/'+idZone)
+        .then(res => {
+            return res.data
+            })
+        .catch(err => {
+            console.log(err)
+            });
+}
+
+
+export const getJeuByType = (typeJeu) => {
+    return client.get('/type/'+typeJeu);
+}

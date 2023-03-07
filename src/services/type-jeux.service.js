@@ -8,7 +8,11 @@ const client = axios.create({
 
 
 export const getAllTypes = () => {
-    return client.get('/').then(response => {
-        return response.data;
-    });
+    return client.get('/')
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
