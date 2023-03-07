@@ -23,6 +23,7 @@ export default function AffectationBenList({filterOn}) {
         );
     }, [])
     
+
     function DetailAffectation(creneau){
         setAffectationClicked(true);
         setCreneauToDetail(creneau);
@@ -34,7 +35,7 @@ export default function AffectationBenList({filterOn}) {
         <div className="ben-result-list">
             {
                 affectationClicked ? 
-                    <div className="zone-details">
+                    <div className="">
                         <CreneauToDetails 
                             creneau={creneauToDetail}
                             setCreneauToDetail={setCreneauToDetail}
@@ -50,11 +51,11 @@ export default function AffectationBenList({filterOn}) {
                     <table className="creneau-result">
                     <thead>
                         <tr>
-                        <th>Bénévole</th>
-                        <th>Date</th>
-                        <th>Heure de début</th>
-                        <th>Heure de fin</th>
-                        <th>Zone</th>
+                            <th>Bénévole</th>
+                            <th>Date</th>
+                            <th>Heure de début</th>
+                            <th>Heure de fin</th>
+                            <th>Zone</th>
                         </tr>
                     </thead>
                     <tbody>
